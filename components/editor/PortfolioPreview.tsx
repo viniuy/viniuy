@@ -29,6 +29,7 @@ const projects: Project[] = [
     status: 'shipped',
     color: '#4ec9b0',
     icon: '/didasko.png',
+    video: '/project_mp4/didasko.mp4',
     github: 'https://github.com/viniuy/didasko-capstone',
   },
   {
