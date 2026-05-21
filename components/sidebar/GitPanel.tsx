@@ -16,7 +16,7 @@ export default function GitPanel() {
   const [error, setError] = useState(false)
 
   useEffect(() => {
-    fetch('https://api.github.com/repos/viniuy/didasko-capstone/commits?per_page=10')
+    fetch('https://api.github.com/repos/viniuy/vs-code-portfolio/commits?per_page=10')
       .then((r) => r.json())
       .then((data) => {
         if (Array.isArray(data)) setCommits(data)

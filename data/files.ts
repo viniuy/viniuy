@@ -8,7 +8,7 @@ export const personalInfo = {
   linkedin: 'https://www.linkedin.com/in/vincentenolpe/',
   location: 'Imus, Cavite, PH',
   school: 'STI College Alabang (BS IT, Jul 2026)',
-  currentlyBuilding: 'ARISE · VEDA · Room Portfolio',
+  currentlyBuilding: 'ARISE · Room Portfolio',
 }
 
 export const defaultTabs: Tab[] = [

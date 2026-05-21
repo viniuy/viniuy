@@ -92,9 +92,28 @@ export default function CodeEditor() {
 
       {/* Minimap */}
       <div style={{ width: '60px', background: '#1e1e1e', borderLeft: '1px solid #252526', flexShrink: 0, overflow: 'hidden', opacity: 0.35 }}>
-        {file.lines.map((_, i) => (
-          <div key={i} style={{ height: '4px', margin: '1px 4px', background: i % 3 === 0 ? '#3a3a3a' : '#2a2a2a', borderRadius: '1px', width: `${30 + Math.random() * 40}%` }} />
-        ))}
+        {file.lines.map((line, i) => {
+          // Get actual line length to determine bar width
+          const raw = line === 'blank' ? '' : Array.isArray(line)
+            ? line.map((p) => (Array.isArray(p) ? p[1] : p)).join('')
+            : String(line)
+          const len = raw.trim().length
+          const width = len === 0 ? 0 : Math.min(8 + (len / 80) * 44, 52)
+          return (
+            <div
+              key={i}
+              style={{
+                height: '3px',
+                margin: '1px 4px',
+                background: raw.trim().startsWith('//') || raw.trim().startsWith('#')
+                  ? '#3a6a3a'
+                  : '#3a3a3a',
+                borderRadius: '1px',
+                width: `${width}px`,
+              }}
+            />
+          )
+        })}
       </div>
     </div>
   )
