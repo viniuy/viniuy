@@ -1,27 +1,33 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { ArrowRight, Check, Folder, Play, Terminal, Hand, X } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 
-const steps = [
+const steps: { element: string; title: string; description: string; Icon: LucideIcon }[] = [
   {
     element: '#file-explorer',
-    title: '📁 File Explorer',
+    title: 'File Explorer',
     description: 'Browse my projects and files here. Click any file to open it in the editor — just like a real codebase.',
+    Icon: Folder,
   },
   {
     element: '#code-editor',
-    title: '💻 Code Editor',
+    title: 'Code Editor',
     description: "This is my portfolio — but written as actual code. Each file tells a different part of my story: projects, skills, and personal stuff.",
+    Icon: Play,
   },
   {
     element: '#terminal-panel',
-    title: '⚡ Terminal',
+    title: 'Terminal',
     description: "This terminal actually works. Type <code>help</code> to see commands, or <code>chat &lt;message&gt;</code> to talk to my AI assistant.",
+    Icon: Terminal,
   },
   {
     element: '#run-button-area',
-    title: '▶ Run Button',
+    title: 'Run Button',
     description: 'Hit Run to simulate a build — then a live preview of my portfolio site pops up in a browser window.',
+    Icon: Play,
   },
 ]
 
@@ -34,6 +40,7 @@ export default function WelcomeModal({ onDismiss }: Props) {
   const [step, setStep] = useState<'welcome' | 'tour' | number>('welcome')
   const [spotlight, setSpotlight] = useState<DOMRect | null>(null)
   const [tooltipPos, setTooltipPos] = useState<{ top: number; left: number } | null>(null)
+  const [animatingTooltip, setAnimatingTooltip] = useState(false)
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 80)
@@ -52,18 +59,52 @@ export default function WelcomeModal({ onDismiss }: Props) {
           Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0)
         )
         setSpotlight(clipped)
-        // position tooltip below or above
-        const below = rect.bottom + 12 + 160 < window.innerHeight
-        setTooltipPos({
-          top: below ? rect.bottom + 12 : rect.top - 172,
-          left: Math.min(Math.max(rect.left, 12), window.innerWidth - 340),
-        })
+
+        const tooltipWidth = 320
+        const tooltipHeight = 172
+        const below = rect.bottom + 12 + tooltipHeight < window.innerHeight
+        const right = rect.right + 12 + tooltipWidth < window.innerWidth
+        const above = rect.top - 12 - tooltipHeight > 0
+        const leftSide = rect.left - 12 - tooltipWidth > 0
+
+        let top: number
+        let left: number
+
+        if (below) {
+          top = rect.bottom + 12
+          left = Math.min(Math.max(rect.left, 12), window.innerWidth - tooltipWidth - 12)
+        } else if (right) {
+          top = Math.min(Math.max(rect.top + rect.height / 2 - tooltipHeight / 2, 12), window.innerHeight - tooltipHeight - 12)
+          left = rect.right + 12
+        } else if (above) {
+          top = rect.top - tooltipHeight - 12
+          left = Math.min(Math.max(rect.left, 12), window.innerWidth - tooltipWidth - 12)
+        } else if (leftSide) {
+          top = Math.min(Math.max(rect.top + rect.height / 2 - tooltipHeight / 2, 12), window.innerHeight - tooltipHeight - 12)
+          left = rect.left - tooltipWidth - 12
+        } else {
+          top = Math.min(Math.max(rect.top, 12), window.innerHeight - tooltipHeight - 12)
+          left = Math.min(Math.max(rect.left, 12), window.innerWidth - tooltipWidth - 12)
+        }
+
+        setTooltipPos({ top, left })
         el.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
       }
     } else {
       setSpotlight(null)
       setTooltipPos(null)
     }
+  }, [step])
+
+  useEffect(() => {
+    if (typeof step !== 'number') {
+      setAnimatingTooltip(false)
+      return
+    }
+
+    setAnimatingTooltip(true)
+    const timeout = window.setTimeout(() => setAnimatingTooltip(false), 180)
+    return () => window.clearTimeout(timeout)
   }, [step])
 
   function close() {
@@ -159,14 +200,15 @@ export default function WelcomeModal({ onDismiss }: Props) {
                 <div style={{ fontSize: '11px', color: '#007acc', fontFamily: 'monospace', marginBottom: '6px', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
                   vincent-portfolio — v1.0.0
                 </div>
-                <div style={{ fontSize: '22px', fontWeight: 600, color: '#fff', letterSpacing: '-0.5px' }}>
-                  Welcome 👋
+                <div style={{ fontSize: '22px', fontWeight: 600, color: '#fff', letterSpacing: '-0.5px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <Hand size={20} />
+                  <span>Welcome</span>
                 </div>
               </div>
               <button onClick={close} style={{ background: 'transparent', border: 'none', color: '#555', cursor: 'pointer', padding: '4px', borderRadius: '4px', fontSize: '18px', lineHeight: 1 }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = '#fff')}
                 onMouseLeave={(e) => (e.currentTarget.style.color = '#555')}>
-                ×
+                <X size={16} />
               </button>
             </div>
 
@@ -178,12 +220,12 @@ export default function WelcomeModal({ onDismiss }: Props) {
             {/* Quick hints */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '28px' }}>
               {[
-                { icon: '📁', label: 'Explorer', desc: 'Click files on the left to open them' },
-                { icon: '⚡', label: 'Terminal', desc: "Type 'help' in the terminal below" },
-                { icon: '▶', label: 'Run', desc: 'Hit the green Run button to see a live preview' },
+                { Icon: Folder, label: 'Explorer', desc: 'Click files on the left to open them' },
+                { Icon: Terminal, label: 'Terminal', desc: "Type 'help' in the terminal below" },
+                { Icon: Play, label: 'Run', desc: 'Hit the green Run button to see a live preview' },
               ].map((h) => (
                 <div key={h.label} style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#252526', border: '1px solid #333', borderRadius: '6px', padding: '10px 14px' }}>
-                  <span style={{ fontSize: '16px', flexShrink: 0 }}>{h.icon}</span>
+                  <h.Icon size={16} style={{ flexShrink: 0, color: '#7c7c7c' }} />
                   <div>
                     <div style={{ fontSize: '12px', color: '#fff', fontWeight: 500, marginBottom: '1px' }}>{h.label}</div>
                     <div style={{ fontSize: '11px', color: '#666', fontFamily: 'monospace' }}>{h.desc}</div>
@@ -201,11 +243,16 @@ export default function WelcomeModal({ onDismiss }: Props) {
                   borderRadius: '6px', color: '#fff', fontSize: '13px', fontWeight: 600,
                   cursor: 'pointer', fontFamily: "'Segoe UI', system-ui, sans-serif",
                   transition: 'background 0.15s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
                 }}
                 onMouseEnter={(e) => (e.currentTarget.style.background = '#0098ff')}
                 onMouseLeave={(e) => (e.currentTarget.style.background = '#007acc')}
               >
-                Take a Tour →
+                <span>Take a Tour</span>
+                <ArrowRight size={14} />
               </button>
               <button
                 onClick={close}
@@ -238,6 +285,9 @@ export default function WelcomeModal({ onDismiss }: Props) {
           padding: '16px 18px',
           boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
           zIndex: 1000,
+          transition: 'opacity 0.18s ease, transform 0.18s ease',
+          opacity: animatingTooltip ? 0.95 : 1,
+          transform: animatingTooltip ? 'translateY(-6px)' : 'translateY(0)',
         }}>
           {/* Step indicator */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
@@ -265,11 +315,21 @@ export default function WelcomeModal({ onDismiss }: Props) {
             )}
             <button
               onClick={next}
-              style={{ flex: 1, padding: '6px 14px', background: '#007acc', border: 'none', borderRadius: '4px', color: '#fff', fontSize: '11px', fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}
+              style={{ flex: 1, padding: '6px 14px', background: '#007acc', border: 'none', borderRadius: '4px', color: '#fff', fontSize: '11px', fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
               onMouseEnter={(e) => (e.currentTarget.style.background = '#0098ff')}
               onMouseLeave={(e) => (e.currentTarget.style.background = '#007acc')}
             >
-              {(step as number) === steps.length - 1 ? "Let's go ✓" : 'Next →'}
+              {(step as number) === steps.length - 1 ? (
+                <>
+                  <span>Let's go</span>
+                  <Check size={14} />
+                </>
+              ) : (
+                <>
+                  <span>Next</span>
+                  <ArrowRight size={14} />
+                </>
+              )}
             </button>
             <button onClick={close} style={{ padding: '6px 10px', background: 'transparent', border: '1px solid #3a3a3a', borderRadius: '4px', color: '#555', fontSize: '11px', cursor: 'pointer', fontFamily: 'inherit' }}>
               Skip

@@ -246,7 +246,7 @@ function PageInner() {
                   { name: 'Prettier', desc: 'Code formatter', color: '#f7b93e' },
                   { name: 'ESLint', desc: 'Linting support', color: '#4b32c3' },
                   { name: 'Tailwind CSS', desc: 'IntelliSense', color: '#38bdf8' },
-                  { name: 'Claude AI', desc: 'AI assistant ✓', color: '#23d18b' },
+                  { name: 'Claude AI', desc: 'AI assistant', color: '#23d18b' },
                   { name: 'GitLens', desc: 'Git supercharged', color: '#e05252' },
                 ].map((ext) => (
                   <div key={ext.name} style={{ padding: '8px', borderRadius: '4px', cursor: 'pointer' }}

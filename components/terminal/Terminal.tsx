@@ -28,10 +28,10 @@ const helpLines: TermLine[] = [
 const contactLines: TermLine[] = [
   { type: 'muted',   value: '' },
   { type: 'success', value: '  ─── Contact Vincent ───' },
-  { type: 'normal',  value: '  📧  vincent.enolpe@gmail.com' },
-  { type: 'normal',  value: '  🐙  github.com/vincentdizon' },
-  { type: 'normal',  value: '  💼  linkedin.com/in/vincentdizon' },
-  { type: 'normal',  value: '  📍  Imus, Cavite, PH' },
+  { type: 'normal',  value: '  email: vincent.enolpe@gmail.com' },
+  { type: 'normal',  value: '  github: github.com/vincentdizon' },
+  { type: 'normal',  value: '  linkedin: linkedin.com/in/vincentdizon' },
+  { type: 'normal',  value: '  location: Imus, Cavite, PH' },
   { type: 'muted',   value: '' },
 ]
 
@@ -197,7 +197,7 @@ export default function Terminal() {
             {line.type === 'prompt' ? (
               <>
                 <span style={{ color: '#4ec9b0' }}>~/vincent-portfolio</span>
-                <span style={{ color: '#569cd6', margin: '0 4px' }}>❯</span>
+                <span style={{ color: '#569cd6', margin: '0 4px' }}>{'>'}</span>
                 {line.value}
               </>
             ) : line.value}
@@ -207,7 +207,7 @@ export default function Terminal() {
         {/* Input row */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px' }}>
           <span style={{ color: '#4ec9b0' }}>~/vincent-portfolio</span>
-          <span style={{ color: '#569cd6', margin: '0 4px' }}>❯</span>
+          <span style={{ color: '#569cd6', margin: '0 4px' }}>{'>'}</span>
           <input
             ref={inputRef}
             value={input}

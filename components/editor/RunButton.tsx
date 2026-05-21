@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { Play, RefreshCcw, Zap } from 'lucide-react'
 import PortfolioPreview from './PortfolioPreview'
 
 type Phase = 'idle' | 'building' | 'done'
@@ -11,7 +12,7 @@ const BUILD_STEPS = [
   { delay: 900,  text: '   Bundling modules (Next.js)...', color: '#858585' },
   { delay: 1400, text: '   Building pages...', color: '#858585' },
   { delay: 1900, text: '   Optimizing assets...', color: '#858585' },
-  { delay: 2300, text: '✓  Compiled successfully in 2.3s', color: '#4ec9b0' },
+  { delay: 2300, text: '   Compiled successfully in 2.3s', color: '#4ec9b0' },
   { delay: 2700, text: '   Local: http://localhost:3000', color: '#569cd6' },
   { delay: 3000, text: '', color: '' },
 ]
@@ -67,10 +68,15 @@ export default function RunButton({ onBuildLines, onBuildStart }: RunButtonProps
 
   useEffect(() => () => clearTimers(), [])
 
-  const label =
-    phase === 'idle'     ? '▶  Run'       :
-    phase === 'building' ? '◌  Building…' :
-    '⚡ View Live'
+  const ActionIcon =
+    phase === 'idle'     ? Play :
+    phase === 'building' ? RefreshCcw :
+    Zap
+
+  const actionLabel =
+    phase === 'idle'     ? 'Run' :
+    phase === 'building' ? 'Building…' :
+    'View Live'
 
   const bg =
     phase === 'idle'     ? '#23d18b' :
@@ -115,7 +121,8 @@ export default function RunButton({ onBuildLines, onBuildStart }: RunButtonProps
         }}
         title={phase === 'done' ? 'View your live portfolio' : 'Run the portfolio'}
       >
-        {label}
+        <ActionIcon size={14} />
+        {actionLabel}
       </button>
 
       {/* Preview overlay */}
