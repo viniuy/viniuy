@@ -10,6 +10,8 @@ import GitPanel from '@/components/sidebar/GitPanel'
 import { RunBuildProvider } from '@/components/editor/RunBuildContext'
 import { useEditor } from '@/components/editor/EditorContext'
 import { FileKey } from '@/types'
+import MobileLayout from '@/components/mobile/MobileLayout'
+import { useIsMobile } from '@/hooks/useIsMobile'
 
 const menuItems = ['File', 'Edit', 'View', 'Go', 'Run', 'Terminal', 'Help']
 
@@ -81,6 +83,7 @@ function PageInner() {
   const [openMenu, setOpenMenu] = useState<string | null>(null)
   const [activePanel, setActivePanel] = useState<string>('explorer')
   const { openFile } = useEditor()
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     const seen = localStorage.getItem('vince-portfolio-welcomed')
@@ -89,6 +92,10 @@ function PageInner() {
       localStorage.setItem('vince-portfolio-welcomed', '1')
     }
   }, [])
+
+  if (isMobile) {
+    return <MobileLayout showWelcome={showWelcome} setShowWelcome={setShowWelcome} />
+  }
 
   function handleMenuAction(action?: string) {
     setOpenMenu(null)

@@ -62,7 +62,7 @@ const initLines: TermLine[] = [
   { type: 'muted', value: '' },
 ]
 
-export default function Terminal() {
+export default function Terminal({ fullHeight }: { fullHeight?: boolean }) {
   const [lines, setLines] = useState<TermLine[]>(initLines)
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -166,7 +166,7 @@ export default function Terminal() {
   }
 
   return (
-    <div style={{ height: '200px', background: '#1e1e1e', borderTop: '1px solid #3a3a3a', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+    <div style={{ height: fullHeight ? '100%' : '200px', background: '#1e1e1e', borderTop: '1px solid #3a3a3a', display: 'flex', flexDirection: 'column', flexShrink: 0, flex: fullHeight ? 1 : undefined }}>
       {/* Term tabs */}
       <div style={{ height: '28px', background: '#252526', display: 'flex', alignItems: 'center', borderBottom: '1px solid #1e1e1e', flexShrink: 0 }}>
         {['TERMINAL', 'PROBLEMS', 'OUTPUT'].map((t, i) => (

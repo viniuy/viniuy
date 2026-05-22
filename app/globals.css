@@ -58,3 +58,43 @@ input::placeholder {
     transform: translateY(0);
   }
 }
+/* ── Mobile responsiveness ─────────────────────────────── */
+@media (max-width: 768px) {
+  /* Larger touch targets */
+  button, [role="button"] {
+    min-height: 36px;
+  }
+
+  /* Slightly larger monospace text for readability */
+  .terminal-body {
+    font-size: 13px !important;
+  }
+
+  /* Prevent horizontal overflow bleed */
+  #code-editor pre,
+  #code-editor span[style*="white-space: pre"] {
+    white-space: pre-wrap !important;
+    word-break: break-all;
+  }
+
+  /* Scrollbars thinner on mobile */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  /* Sidebar fills available width on mobile */
+  #file-explorer > div {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Tab bar scrolls horizontally without showing scrollbar */
+  .tab-bar-scroll {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tab-bar-scroll::-webkit-scrollbar {
+    display: none;
+  }
+}

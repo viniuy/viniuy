@@ -38,7 +38,7 @@ export default function Sidebar() {
   }
 
   return (
-    <div style={{ width: '220px', background: '#252526', display: 'flex', flexDirection: 'column', flexShrink: 0, overflow: 'hidden', borderRight: '1px solid #1e1e1e', height: '100%' }}>
+    <div style={{ width: '100%', maxWidth: '220px', background: '#252526', display: 'flex', flexDirection: 'column', flexShrink: 0, overflow: 'hidden', borderRight: '1px solid #1e1e1e', height: '100%' }}>
       <div style={{ height: '35px', display: 'flex', alignItems: 'center', padding: '0 12px', fontSize: '11px', fontWeight: 500, color: '#bbb', textTransform: 'uppercase', letterSpacing: '0.08em', flexShrink: 0 }}>
         Explorer
       </div>
