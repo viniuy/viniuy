@@ -44,17 +44,9 @@ I'm a developer based in the Philippines who picks up skills fast and takes ever
 
 <div align="center">
 
-\`\`\`
-┌─────────────────────────────────────────────────────────────────┐
-│                                                                  │
-│  🥇  STI Tagisan ng Talino — Codefest                           │
-│      CHAMPIONSHIP                                                │
-│                                                                  │
-│  🥈  STI Tagisan ng Talino — Codefest                           │
-│      1ST RUNNER UP · CLUSTER                                     │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-\`\`\`
+| 🥇 | STI Tagisan ng Talino — Codefest | **Championship** |
+|:---:|:---|:---|
+| 🥈 | STI Tagisan ng Talino — Codefest | **1st Runner Up · Cluster** |
 
 </div>
 
@@ -64,25 +56,15 @@ I'm a developer based in the Philippines who picks up skills fast and takes ever
 
 <div align="center">
 
-<img height="180em" src="https://github-readme-stats.vercel.app/api?username=viniuy&show_icons=true&theme=tokyonight&include_all_commits=true&count_private=true&hide_border=true&bg_color=0D1117&title_color=00D4FF&icon_color=00D4FF&text_color=FFFFFF"/>
-<img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=viniuy&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=00D4FF&text_color=FFFFFF"/>
+![GitHub Streak](https://streak-stats.demolab.com?user=viniuy&theme=tokyonight&hide_border=true&background=0D1117&stroke=00D4FF&ring=00D4FF&fire=FF6B6B&currStreakLabel=00D4FF)
 
-<br/>
-
-<img src="https://github-readme-streak-stats.herokuapp.com/?user=viniuy&theme=tokyonight&hide_border=true&background=0D1117&stroke=00D4FF&ring=00D4FF&fire=FF6B6B&currStreakLabel=00D4FF"/>
+![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=viniuy&theme=react-dark&hide_border=true&bg_color=0D1117&color=00D4FF&line=00D4FF&point=FFFFFF)
 
 </div>
 
 ---
 
 <div align="center">
-
-\`\`\`
-[ SYSTEM MESSAGE ] ────────────────────────────────────────────
-  If you're reading this, the README worked.
-  The builder is always online. Drop a message.
-───────────────────────────────────────────────────────────────
-\`\`\`
 
 ![Profile Views](https://komarev.com/ghpvc/?username=viniuy&color=00D4FF&style=flat-square&label=VISITORS)
 
