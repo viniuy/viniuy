@@ -8,6 +8,10 @@
 
 I'm a developer based in the Philippines who picks up skills fast and takes everything seriously. I stay physically active, I'm always listening to music, and I build things I actually care about — especially anything that automates the boring stuff.
 
+<br/>
+
+[![Portfolio](https://img.shields.io/badge/vincentdizon.vercel.app-0D1117?style=for-the-badge&logo=vercel&logoColor=00D4FF)](https://vincentdizon.vercel.app)
+
 </div>
 
 ---
@@ -22,6 +26,7 @@ I'm a developer based in the Philippines who picks up skills fast and takes ever
 ![PHP](https://img.shields.io/badge/PHP-0D1117?style=for-the-badge&logo=php&logoColor=00D4FF)
 ![C++](https://img.shields.io/badge/C++-0D1117?style=for-the-badge&logo=cplusplus&logoColor=00D4FF)
 ![SQL](https://img.shields.io/badge/SQL-0D1117?style=for-the-badge&logo=postgresql&logoColor=00D4FF)
+![AutoHotkey](https://img.shields.io/badge/AutoHotkey-0D1117?style=for-the-badge&logo=autohotkey&logoColor=00D4FF)
 
 ![React](https://img.shields.io/badge/React-0D1117?style=for-the-badge&logo=react&logoColor=00D4FF)
 ![React Native](https://img.shields.io/badge/React_Native-0D1117?style=for-the-badge&logo=react&logoColor=00D4FF)
@@ -39,7 +44,7 @@ I'm a developer based in the Philippines who picks up skills fast and takes ever
 
 <div align="center">
 
-```
+\`\`\`
 ┌─────────────────────────────────────────────────────────────────┐
 │                                                                  │
 │  🥇  STI Tagisan ng Talino — Codefest                           │
@@ -49,7 +54,7 @@ I'm a developer based in the Philippines who picks up skills fast and takes ever
 │      1ST RUNNER UP · CLUSTER                                     │
 │                                                                  │
 └─────────────────────────────────────────────────────────────────┘
-```
+\`\`\`
 
 </div>
 
