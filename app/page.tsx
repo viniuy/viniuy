@@ -22,8 +22,6 @@ const menuDropdowns: Record<string, { label: string; shortcut?: string; divider?
     { divider: true, label: '' },
     { label: 'readme — README.md', action: 'readme' },
     { label: 'projects — projects.tsx', action: 'projects' },
-    { label: 'boxing — boxing.log', action: 'boxing' },
-    { label: 'osu — osu.config', action: 'osu' },
     { divider: true, label: '' },
     { label: 'Close Editor', shortcut: '⌘W' },
   ],

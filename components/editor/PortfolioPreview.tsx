@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import type { ComponentType } from 'react'
 import { Activity, Lock, MapPin, Mail, CircleDot } from 'lucide-react'
 import { personalInfo } from '@/data/files'
@@ -141,23 +141,28 @@ function ProjectSpotlight() {
         transition: 'opacity 0.2s ease, transform 0.2s ease',
       }}>
         {/* Top row */}
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '28px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', marginBottom: '28px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: 1, minWidth: 0 }}>
             {/* Icon */}
             <div style={{
-              width: '64px', height: '64px', borderRadius: '14px',
+              width: '56px', height: '56px', borderRadius: '14px',
               background: '#111214', display: 'grid', placeItems: 'center', flexShrink: 0,
               border: `1px solid ${current.color}30`,
-            }}>
+            }}> 
               {typeof current.icon === 'string' ? (
-                <img src={current.icon} alt={current.name} style={{ width: '48px', height: '48px', objectFit: 'contain' }} />
+                <img src={current.icon} alt={current.name} style={{ width: '40px', height: '40px', objectFit: 'contain' }} />
               ) : (
-                <current.icon size={28} color={current.color} />
+                <current.icon size={24} color={current.color} />
               )}
             </div>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                <span style={{ color: '#fff', fontWeight: 700, fontSize: '22px', fontFamily: "'Segoe UI', system-ui, sans-serif", letterSpacing: '-0.5px' }}>
+
+            <div style={{ minWidth: 0, flex: 1 }}>
+              {/* Name row with status + counter inline */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px', flexWrap: 'wrap' }}>
+                <span style={{
+                  color: '#fff', fontWeight: 700, fontSize: '20px',
+                  fontFamily: "'Segoe UI', system-ui, sans-serif", letterSpacing: '-0.5px',
+                }}>
                   {current.name}
                 </span>
                 <span style={{
@@ -169,20 +174,21 @@ function ProjectSpotlight() {
                 }}>
                   {current.status}
                 </span>
+                {/* Counter — moved inline, no longer a separate float */}
+                <span style={{
+                  marginLeft: 'auto',
+                  fontSize: '12px',
+                  color: current.color,
+                  fontFamily: 'monospace',
+                  whiteSpace: 'nowrap',
+                  flexShrink: 0,
+                }}>
+                  {String(index + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+                </span>
               </div>
               <p style={{ color: '#888', fontSize: '13px', margin: 0, fontFamily: "'Segoe UI', system-ui, sans-serif" }}>
                 {current.type}
               </p>
-            </div>
-          </div>
-
-          {/* Project counter */}
-          <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: '28px', fontWeight: 700, color: current.color, fontFamily: 'monospace', lineHeight: 1 }}>
-              {String(index + 1).padStart(2, '0')}
-            </div>
-            <div style={{ fontSize: '11px', color: '#333', fontFamily: 'monospace' }}>
-              / {String(projects.length).padStart(2, '0')}
             </div>
           </div>
         </div>
@@ -249,19 +255,19 @@ function ProjectSpotlight() {
         <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           {current.github ? (
             <a
-              href={current.github}
+            href={current.github}
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                display: 'inline-flex', alignItems: 'center', gap: '8px',
-                color: current.color, fontSize: '12px', textDecoration: 'none',
-                fontFamily: 'monospace', padding: '8px 16px',
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                color: current.color, textDecoration: 'none',
+                fontFamily: 'monospace', padding: '8px 12px',
                 border: `1px solid ${current.color}40`, borderRadius: '6px',
                 background: current.color + '10', transition: 'all 0.15s',
               }}
             >
               <i className="devicon-github-original" style={{ fontSize: '16px' }} />
-              View on GitHub →
+              <span style={{ fontSize: '13px' }}>↗</span>
             </a>
           ) : <div />}
 
@@ -320,6 +326,18 @@ function ProjectSpotlight() {
 
 function ContactSection() {
   const [copied, setCopied] = useState<string | null>(null)
+  const [narrow, setNarrow] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const ro = new ResizeObserver(([entry]) => {
+      setNarrow(entry.contentRect.width < 480)
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
 
   function copy(val: string, key: string) {
     navigator.clipboard.writeText(val)
@@ -367,54 +385,54 @@ function ContactSection() {
   ]
 
   return (
-    <div style={{ padding: '32px 40px', height: '100%', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div ref={containerRef} style={{ padding: '32px 40px', height: '100%', display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
-      {/* Header card — like a VS Code notification */}
+      {/* Header card */}
       <div style={{
         background: '#16161c',
         border: '1px solid #ffffff0d',
         borderRadius: '12px',
-        padding: '24px',
+        padding: '20px',
         display: 'flex',
         alignItems: 'center',
-        gap: '20px',
+        gap: '16px',
+        flexWrap: 'wrap',       
       }}>
         {/* Avatar */}
         <div style={{
-          width: '56px', height: '56px', borderRadius: '14px',
+          width: '48px', height: '48px', borderRadius: '14px',
           background: 'linear-gradient(135deg, #007acc, #23d18b)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: '20px', fontWeight: 700, color: '#fff', flexShrink: 0,
+          fontSize: '18px', fontWeight: 700, color: '#fff', flexShrink: 0,
           fontFamily: 'monospace',
         }}>
           VD
         </div>
 
-        <div style={{ flex: 1 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-            <span style={{ color: '#fff', fontWeight: 700, fontSize: '16px', fontFamily: "'Segoe UI', system-ui, sans-serif" }}>
+        <div style={{ flex: 1, minWidth: 0 }}>   {/* minWidth: 0 prevents overflow */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px', flexWrap: 'wrap' }}>
+            <span style={{ color: '#fff', fontWeight: 700, fontSize: '15px', fontFamily: "'Segoe UI', system-ui, sans-serif" }}>
               Vincent Dizon
             </span>
-            {/* Online indicator */}
             <span style={{ display: 'flex', alignItems: 'center', gap: '4px', background: '#23d18b15', border: '1px solid #23d18b30', borderRadius: '20px', padding: '2px 8px' }}>
               <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#23d18b', display: 'inline-block' }} />
-              <span style={{ fontSize: '10px', color: '#23d18b', fontFamily: 'monospace' }}>Open to work</span>
+              <span style={{ fontSize: '10px', color: '#23d18b', fontFamily: 'monospace' }}>Online</span>
             </span>
           </div>
-          <p style={{ color: '#666', fontSize: '12px', margin: 0, fontFamily: 'monospace' }}>
-            Full-Stack Developer · Graduating Jul 2026 · Imus, Cavite PH
+          <p style={{ color: '#999', fontSize: '11px', margin: 0, fontFamily: 'monospace', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            Full-Stack Developer · Software Engineer · Imus, Cavite PH
           </p>
         </div>
 
-        {/* Response time */}
+        {/* Response time — will wrap to its own row if too narrow */}
         <div style={{ textAlign: 'right', flexShrink: 0 }}>
-          <div style={{ fontSize: '18px', fontWeight: 700, color: '#23d18b', fontFamily: 'monospace' }}>&lt; 24h</div>
+          <div style={{ fontSize: '16px', fontWeight: 700, color: '#23d18b', fontFamily: 'monospace' }}>&lt; 24h</div>
           <div style={{ fontSize: '10px', color: '#555', fontFamily: 'monospace' }}>response time</div>
         </div>
       </div>
 
       {/* Contact cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+       <div style={{ display: 'grid', gridTemplateColumns: narrow ? 'repeat(4, 1fr)' : '1fr 1fr', gap: '10px' }}>
         {links.map((link) => (
           <div
             key={link.key}
@@ -423,11 +441,15 @@ function ContactSection() {
               background: '#16161c',
               border: `1px solid ${copied === link.key ? link.color + '60' : '#ffffff0d'}`,
               borderRadius: '10px',
-              padding: '16px 18px',
+              padding: narrow ? '14px 8px' : '16px 18px',
               cursor: 'pointer',
               transition: 'all 0.2s',
               position: 'relative',
               overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: narrow ? 'center' : 'flex-start',
+              gap: '8px',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.border = `1px solid ${link.color}40`
@@ -448,19 +470,31 @@ function ContactSection() {
               transition: 'opacity 0.3s',
             }} />
 
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-              <div style={{ color: link.color }}>{link.icon}</div>
-              <span style={{ fontSize: '9px', color: '#444', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                {link.action === 'copy' ? (copied === link.key ? '✓ copied' : 'click to copy') : 'click to open'}
-              </span>
-            </div>
+            <div style={{ color: link.color }}>{link.icon}</div>
 
-            <div style={{ fontSize: '10px', color: '#555', fontFamily: 'monospace', marginBottom: '3px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-              {link.label}
-            </div>
-            <div style={{ fontSize: '12px', color: '#ccc', fontFamily: 'monospace', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              {link.display}
-            </div>
+            {narrow ? (
+              
+              <span style={{ fontSize: '9px', color: '#555', fontFamily: 'monospace', textAlign: 'center', lineHeight: 1.4 }}>
+                {link.action === 'copy'
+                  ? (copied === link.key ? '✓ copied' : 'click to\ncopy')
+                  : (link.key === 'email' ? 'click to\nemail' : 'click to\nopen')}
+              </span>
+            ) : (
+              
+              <>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                  <span style={{ fontSize: '9px', color: '#444', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.08em', display: narrow ? 'block' : 'none',}}>
+                    {link.action === 'copy' ? (copied === link.key ? '✓ copied' : 'click to copy') : 'click to open'}
+                  </span>
+                </div>
+                <div style={{ fontSize: '10px', color: '#555', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                  {link.label}
+                </div>
+                <div style={{ fontSize: '12px', color: '#ccc', fontFamily: 'monospace', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%' }}>
+                  {link.display}
+                </div>
+              </>
+            )}
           </div>
         ))}
       </div>
