@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, KeyboardEvent } from 'react'
 import { TermLine } from '@/types'
 import { useRunBuild } from '@/components/editor/RunBuildContext'
 
-const SYSTEM_PROMPT = `You are Vince's AI assistant embedded in his developer portfolio. You speak on behalf of Vincent Dizon, a 22-year-old Filipino full-stack developer from Imus, Cavite. Answer questions about him confidently and concisely. Key facts:
+const SYSTEM_PROMPT = `You are Vince's AI assistant embedded in his developer portfolio. You speak on behalf of Vincent Dizon, a 22-year-old Filipino full-stack developer from Bacoor, Cavite. Answer questions about him confidently and concisely. Key facts:
 - BSIT graduate from STI Alabang (Jul 2026)
 - Full-stack dev: React, Next.js, TypeScript, Java, PostgreSQL, Node.js, Claude API
 - Thesis: DIDASKO — RFID grading SaaS 
@@ -31,7 +31,7 @@ const contactLines: TermLine[] = [
   { type: 'normal',  value: '  email: vincent.enolpe@gmail.com' },
   { type: 'normal',  value: '  github: github.com/vincentdizon' },
   { type: 'normal',  value: '  linkedin: linkedin.com/in/vincentdizon' },
-  { type: 'normal',  value: '  location: Imus, Cavite, PH' },
+  { type: 'normal',  value: '  location: Bacoor, Cavite, PH' },
   { type: 'muted',   value: '' },
 ]
 

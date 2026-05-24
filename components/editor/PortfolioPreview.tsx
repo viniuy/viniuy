@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from 'react'
 import type { ComponentType } from 'react'
 import { Activity, Lock, MapPin, Mail, CircleDot } from 'lucide-react'
 import { personalInfo } from '@/data/files'
+import mapboxgl from 'mapbox-gl'
+import 'mapbox-gl/dist/mapbox-gl.css'
 
 interface Props {
   onClose: () => void
@@ -76,6 +78,134 @@ const row2 = [
   { label: 'VS Code',     icon: 'devicon-vscode-plain',         color: '#007acc' },
   { label: 'Prisma',      icon: 'devicon-prisma-original',      color: '#5a67d8' },
 ]
+
+function MapCard() {
+  const mapContainer = useRef<HTMLDivElement>(null)
+  const map = useRef<mapboxgl.Map | null>(null)
+
+  useEffect(() => {
+  if (map.current || !mapContainer.current) return
+
+  map.current = new mapboxgl.Map({
+    container: mapContainer.current,
+    style: 'mapbox://styles/mapbox/dark-v11',
+    center: [120.97029, 14.36597], 
+    zoom: 9.5,
+    interactive: true,
+    accessToken: process.env.NEXT_PUBLIC_MAPBOX_TOKEN!,
+  })
+  map.current.on('click', (e) => e.preventDefault())
+  map.current.on('contextmenu', (e) => e.preventDefault())
+  map.current.on('load', () => {
+    if (!map.current) return
+
+    map.current.addSource('molino', {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+              type: 'Polygon',
+              coordinates: [[
+                [120.93860714478791, 14.371308813636944],
+                [120.9376647591892,  14.35046112958669],
+                [120.93751527198037, 14.336522081354246],
+                [120.94126214353321, 14.322779118975333],
+                [120.94983392993657, 14.321856492062082],
+                [120.96276111835977, 14.32390653965679],
+                [120.97309872034458, 14.330320605026643],
+                [120.98069052314298, 14.332512015038489],
+                [120.98488730462583, 14.32798215786768],
+                [120.9881204751473,  14.331417323736744],
+                [120.98618930615481, 14.337974813317615],
+                [120.99637438834725, 14.337968270758537],
+                [120.9976890930892,  14.353296418870869],
+                [121.00301709081953, 14.355652286726425],
+                [120.99899324826737, 14.366768607409924],
+                [120.99544207167423, 14.374918540575152],
+                [120.99721929689775, 14.378994392021681],
+                [120.99754757645348, 14.384795901253582],
+                [120.99480614823199, 14.391857236985757],
+                [121.00306520285852, 14.391387307222402],
+                [120.99562733665755, 14.402690395139956],
+                [120.98396956970925, 14.40583890628217],
+                [120.977648766338,   14.405521378555008],
+                [120.96938569803098, 14.410082233051682],
+                [120.96468527068072, 14.406945585848078],
+                [120.95739065810199, 14.407732670761874],
+                [120.95350009247613, 14.404750157450195],
+                [120.94522988175021, 14.407109426698995],
+                [120.94003925347766, 14.406955423773425],
+                [120.93860714478791, 14.371308813636944],
+              ]],
+            },
+          },
+        ],
+      },
+    })
+
+    map.current.addLayer({
+      id: 'molino-fill',
+      type: 'fill',
+      source: 'molino',
+      paint: {
+        'fill-color': '#23d18b',
+        'fill-opacity': 0.08,
+      },
+    })
+
+    map.current.addLayer({
+      id: 'molino-border',
+      type: 'line',
+      source: 'molino',
+      paint: {
+        'line-color': '#23d18b',
+        'line-width': 1.5,
+        'line-opacity': 0.6,
+      },
+    })
+  })
+
+  // Green dot marker at center
+  const el = document.createElement('div')
+  el.style.cssText = `
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #23d18b;
+    border: 2px solid #0f0f13;
+    box-shadow: 0 0 0 4px #23d18b30;
+  `
+  new mapboxgl.Marker({ element: el })
+    .setLngLat([120.97029, 14.36597])
+    .addTo(map.current)
+
+  return () => { map.current?.remove(); map.current = null }
+}, [])
+
+  return (
+    <div style={{ position: 'relative', borderRadius: '10px', overflow: 'hidden', height: '160px', border: '1px solid #ffffff0d' }}>
+      <div ref={mapContainer} style={{ width: '100%', height: '100%' }} />
+      {/* Overlay label */}
+      <div style={{
+        position: 'absolute', bottom: '10px', left: '10px',
+        background: 'rgba(15,15,19,0.75)',
+        backdropFilter: 'blur(6px)',
+        border: '1px solid #ffffff0d',
+        borderRadius: '6px',
+        padding: '6px 10px',
+        display: 'flex', alignItems: 'center', gap: '6px',
+      }}>
+        <MapPin size={12} color="#23d18b" />
+        <span style={{ fontSize: '11px', color: '#ccc', fontFamily: 'monospace' }}>
+          Bacoor, Cavite, PH
+        </span>
+      </div>
+    </div>
+  )
+}
 
 function TechChip({ label, icon, color }: { label: string; icon: string; color: string }) {
   return (
@@ -373,15 +503,6 @@ function ContactSection() {
       icon: <i className="devicon-linkedin-plain colored" style={{ fontSize: '16px' }} />,
       action: 'open',
     },
-    {
-      key: 'location',
-      label: 'Location',
-      value: 'Imus, Cavite, PH',
-      display: 'Imus, Cavite, PH',
-      color: '#23d18b',
-      icon: <MapPin size={16} />,
-      action: 'copy',
-    },
   ]
 
   return (
@@ -420,7 +541,7 @@ function ContactSection() {
             </span>
           </div>
           <p style={{ color: '#999', fontSize: '11px', margin: 0, fontFamily: 'monospace', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-            Full-Stack Developer · Software Engineer · Imus, Cavite PH
+            Full-Stack Developer · Software Engineer · Bacoor, Cavite PH
           </p>
         </div>
 
@@ -432,7 +553,7 @@ function ContactSection() {
       </div>
 
       {/* Contact cards */}
-       <div style={{ display: 'grid', gridTemplateColumns: narrow ? 'repeat(4, 1fr)' : '1fr 1fr', gap: '10px' }}>
+       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
         {links.map((link) => (
           <div
             key={link.key}
@@ -497,8 +618,9 @@ function ContactSection() {
             )}
           </div>
         ))}
-      </div>
 
+      </div>  
+        <MapCard />
       {/* CTA */}
       <a
         href={`mailto:${personalInfo.email}`}

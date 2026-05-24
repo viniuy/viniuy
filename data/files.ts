@@ -6,7 +6,7 @@ export const personalInfo = {
   email: 'vincent.enolpe@gmail.com',
   github: 'https://github.com/viniuy',
   linkedin: 'https://www.linkedin.com/in/vincentenolpe/',
-  location: 'Imus, Cavite, PH',
+  location: 'Bacoor, Cavite, PH',
   school: 'STI College Alabang (BS IT, Jul 2026)',
   currentlyBuilding: 'ARISE · Room Portfolio',
 }
@@ -26,7 +26,7 @@ export const files: Record<string, FileData> = {
       'blank',
       [['key','const'], ' developer = {'],
       [['var','  name'], ': ', ['str','"Vincent Dizon"'], ','],
-      [['var','  location'], ': ', ['str','"Imus, Cavite, PH"'], ','],
+      [['var','  location'], ': ', ['str','"Bacoor, Cavite, PH"'], ','],
       [['var','  school'], ': ', ['str','"STI College Alabang (BSIT, Jul 2026)"'], ','],
       [['var','  email'], ': ', ['str','"vincent.enolpe@gmail.com"'], ','],
       'blank',
