@@ -65,7 +65,7 @@ const menuDropdowns: Record<string, { label: string; shortcut?: string; divider?
     { divider: true, label: '' },
     { label: 'GitHub ↗', action: 'github' },
     { label: 'LinkedIn ↗', action: 'linkedin' },
-    { label: 'Email Vincent ↗', action: 'email' },
+    { label: 'Email Me ↗', action: 'email' },
   ],
 }
 
