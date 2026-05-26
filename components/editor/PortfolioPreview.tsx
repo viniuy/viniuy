@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import type { ComponentType } from 'react'
-import { Activity, Lock, MapPin, Mail, CircleDot } from 'lucide-react'
+import { Lock, MapPin, Mail, CircleDot } from 'lucide-react'
 import { personalInfo } from '@/data/files'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
@@ -13,47 +13,68 @@ interface Props {
 
 type Project = {
   name: string
-  type: string
-  stack: string
+  stack: string[]
   status: string
   color: string
   icon: string | ComponentType<any>
   users?: number | null
   github?: string
   video?: string
+  description: string
+}
+
+const techMap: Record<string, { icon: string; color: string }> = {
+  'Next.js':      { icon: 'devicon-nextjs-plain',        color: '#ffffff' },
+  'TypeScript':   { icon: 'devicon-typescript-plain',    color: '#3178c6' },
+  'Prisma':       { icon: 'devicon-prisma-original',     color: '#5a67d8' },
+  'PostgreSQL':   { icon: 'devicon-postgresql-plain',    color: '#336791' },
+  'Supabase':     { icon: 'devicon-supabase-plain',      color: '#3ecf8e' },
+  'Vercel':       { icon: 'devicon-vercel-plain',        color: '#ffffff' },
+  'React':        { icon: 'devicon-react-original',      color: '#61dafb' },
+  'Firebase':     { icon: 'devicon-firebase-plain',      color: '#ffca28' },
+  'Shadcn UI':    { icon: 'devicon-radixui-plain',       color: '#ffffff' },
+  'Zod':          { icon: 'devicon-zod-plain',           color: '#3068b7' },
+  'NextAuth':     { icon: 'devicon-nextjs-plain',        color: '#ffffff' },
+  'TanStack Query': { icon: 'devicon-react-original',   color: '#ef4444' },
+  'Resend':       { icon: 'devicon-google-plain',        color: '#000000' },
+  'Axios':        { icon: 'devicon-axios-plain',         color: '#5a29e4' },
+  'Tailwind CSS': { icon: 'devicon-tailwindcss-plain',   color: '#38bdf8' },
+  'Java':         { icon: 'devicon-java-plain',          color: '#f89820' },
+  'Node.js':      { icon: 'devicon-nodejs-plain',        color: '#68a063' },
+  'Python':       { icon: 'devicon-python-plain',        color: '#3572a5' },
+  'PHP':          { icon: 'devicon-php-plain',           color: '#8892be' },
+  'Git':          { icon: 'devicon-git-plain',           color: '#f05032' },
 }
 
 const projects: Project[] = [
   {
     name: 'DIDASKO',
-    type: 'RFID Grading SaaS',
-    stack: 'React · PostgreSQL · Java',
+    stack: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'NextAuth', 'TanStack Query', 'Zod', 'Shadcn UI', 'Resend', 'Supabase', 'Vercel'],
     status: 'shipped',
-    color: '#4ec9b0',
+    color: '#e0c138d5',
     icon: '/didasko.png',
     video: '/project_mp4/didasko.mp4',
     github: 'https://github.com/viniuy/didasko-capstone',
+    description: 'A multi-role SaaS for RFID-based attendance tracking and grade management, built with enterprise-grade security including break-glass access control and full audit logging.',
+  },
+  {
+    name: 'INFORMATICS',
+    description: 'Maintained two production sites — a student portal and a course marketplace. Handled UI, cookie consent management, and frontend feature work across both.',
+    stack: ['React', 'TypeScript', 'Tailwind CSS', 'Next.js'],
+    status: 'active',
+    color: '#78b3ce',
+    icon: '/info_logo.png',
+    video: '/project_mp4/informatics_Video.mp4',
   },
   {
     name: 'CHRONOSYNC',
-    type: 'Collaboration Platform',
-    stack: 'React · Firebase · TypeScript',
-    users: null,
+    stack: ['React', 'Firebase', 'TypeScript'],
     status: 'shipped',
     color: '#569cd6',
     icon: '/chronos.png',
     video: '/project_mp4/chronosync.mp4',
     github: 'https://github.com/viniuy/ChronoSync4.0',
-  },
-  {
-    name: 'ARISE',
-    type: 'Fitness RPG App',
-    stack: 'React Native · Claude API',
-    users: null,
-    status: 'active',
-    color: '#ce9178',
-    icon: Activity,
-    github: 'https://github.com/viniuy/Arise',
+    description: 'A real-time collaboration platform for team communication and project management.',
   },
 ]
 
@@ -316,23 +337,36 @@ function ProjectSpotlight() {
                   {String(index + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
                 </span>
               </div>
-              <p style={{ color: '#888', fontSize: '13px', margin: 0, fontFamily: "'Segoe UI', system-ui, sans-serif" }}>
-                {current.type}
-              </p>
+              {current.description && (
+                <p style={{
+                  color: '#888',
+                  fontSize: '12px',
+                  lineHeight: 1.6,
+                  margin: '8px 0 0',
+                  fontFamily: "'Segoe UI', system-ui, sans-serif",
+                }}>
+                  {current.description}
+                </p>
+              )}
             </div>
           </div>
         </div>
 
         {/* Stack tags */}
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '24px' }}>
-          {current.stack.split(' · ').map((s) => (
-            <span key={s} style={{
-              fontSize: '11px', padding: '4px 10px', borderRadius: '6px', fontFamily: 'monospace',
-              background: current.color + '15', color: current.color, border: `1px solid ${current.color}30`,
-            }}>
-              {s}
-            </span>
-          ))}
+          {current.stack.map((s) => {
+            const meta = techMap[s]
+            return (
+              <span key={s} style={{
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                fontSize: '11px', padding: '4px 10px', borderRadius: '6px', fontFamily: 'monospace',
+                background: current.color + '15', color: current.color, border: `1px solid ${current.color}30`,
+              }}>
+                {meta && <i className={`${meta.icon} colored`} style={{ fontSize: '13px', color: meta.color }} />}
+                {s}
+              </span>
+            )
+          })}
         </div>
 
         {/* Video */}
