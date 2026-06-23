@@ -17,6 +17,7 @@ const explorerTree: FolderItem[] = [
       { key: 'didasko', label: 'DIDASKO/index.tsx',   icon: 'ti-brand-typescript', iconColor: '#007acc' },
       { key: 'arise',   label: 'ARISE/index.tsx',     icon: 'ti-brand-typescript', iconColor: '#007acc' },
       { key: 'chrono',  label: 'CHRONOSYNC/index.tsx',icon: 'ti-brand-typescript', iconColor: '#007acc' },
+      { key: 'mikay',   label: 'MPL/index.tsx',       icon: 'ti-brand-typescript', iconColor: '#007acc' },
       { key: 'room',    label: 'ROOM/scene.tsx',      icon: 'ti-brand-typescript', iconColor: '#007acc' },
     ],
   },

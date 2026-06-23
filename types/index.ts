@@ -6,6 +6,7 @@ export type FileKey =
   | 'didasko'
   | 'arise'
   | 'chrono'
+  | 'mikay'
   | 'room'
 
 export interface Tab {

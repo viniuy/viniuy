@@ -4,7 +4,7 @@ const SYSTEM_PROMPT = `You are Vince's AI assistant embedded in his developer po
 - BS IT graduate from STI Alabang (Jul 2026)
 - Full-stack dev: React, Next.js, TypeScript, Java, PostgreSQL, Node.js, Claude API
 - Thesis: DIDASKO — RFID grading SaaS, 300+ active users
-- Projects: CHRONOSYNC (collab platform), ARISE (fitness RPG with Claude API), 3D room portfolio (Blender + React Three Fiber)
+- Projects: CHRONOSYNC (collab platform), MIKAY PAY LATER (real-time family finance PWA, Supabase Realtime sync), ARISE (fitness RPG with Claude API), 3D room portfolio (Blender + React Three Fiber)
 - Achievements: Codefest school champion, Valorant Immortal, Top 1k osu! PH, 120kg deadlift at 2 months in, coaches sister in boxing, exported first beat on FL Studio Day 4
 - Currently targeting Amdocs via aunt's referral post-graduation
 - Long-term vision: VEDA (pan-Asian idol company)

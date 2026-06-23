@@ -76,6 +76,16 @@ const projects: Project[] = [
     github: 'https://github.com/viniuy/ChronoSync4.0',
     description: 'A real-time collaboration platform for team communication and project management.',
   },
+  {
+    name: 'Mikay Pay Later (MPL)',
+    stack: ['Next.js', 'Supabase', 'TypeScript', 'Tailwind CSS'],
+    status: 'shipped',
+    color: '#10b981',
+    icon: '/mikaypaylater.png',
+    video: '/project_mp4/mikay.mp4',
+    github: 'https://github.com/viniuy/home-finance',
+    description: 'An installable family finance PWA with live multi-device sync via Supabase Realtime — everyone in the house sees the same numbers, instantly.',
+  },
 ]
 
 const row1 = [
